@@ -1,43 +1,93 @@
 // Assignment code here
-const characters = {
-    lowerCase: "abcdefghijklmnopqrstuvwxyz",
-    upperCase: "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
-    numbers: "0123456789",
-    symbols: "!@#$%^&*.,",
+var optionsChoseByUser = {
+    passwordLength: 0,
+    containLowerCase: false,
+    containUpperCase: false,
+    containNumbers: false,
+    containSymbols: false,
 }
 
-const getCharacter = [
-    function lowerCase() {
-        return characters.lowerCase[Math.floor(Math.random() * characters.lowerCase.length)];
+var functionToExecute = [];
+var password;
+
+const lowerCase = "abcdefghijklmnopqrstuvwxyz";
+const upperCase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+const numbers = "0123456789";
+const symbols = "!@#$%^&*.,";
+
+const getCharacter = {
+    lowerCase: function() {
+        return lowerCase[Math.floor(Math.random() * lowerCase.length)];
     },
-    function upperCase() {
-        return characters.upperCase[Math.floor(Math.random() * characters.upperCase.length)];
+    upperCase: function() {
+        return upperCase[Math.floor(Math.random() * upperCase.length)];
     },
-    function numbers() {
-        return characters.numbers[Math.floor(Math.random() * characters.numbers.length)];
+    numbers: function() {
+        return numbers[Math.floor(Math.random() * numbers.length)];
     },
-    function symbols() {
-        return characters.symbols[Math.floor(Math.random() * characters.symbols.length)];
-    },
-]
+    symbols: function() {
+        return symbols[Math.floor(Math.random() * symbols.length)];
+    }
+}
+
+function askUserForPasswordLength() {
+    const passwPrompt = window.prompt("Choose a number between 8 and 128.");
+    if (passwPrompt >= 8 && passwPrompt <= 128) {
+        optionsChoseByUser.passwordLength = passwPrompt
+    } else {
+        window.alert("The password must have between 8 and 128 characters.")
+        askUserForPasswordLength()
+    }
+}
+
+function askUserIfTheyWantLowerCase() {
+    const lowPrompt = window.confirm("Press OK to add lower case letters to your password.");
+    optionsChoseByUser.containLowerCase = lowPrompt
+}
+
+function askUserIfTheyWantUpperCase() {
+    const uppPrompt = window.confirm("Press OK to add upper case letters to your password.");
+    optionsChoseByUser.containUpperCase = uppPrompt
+}
+
+function askUserIfTheyWantNumbers() {
+    const numPrompt = window.confirm("Press OK to add numbers to your password.");
+    optionsChoseByUser.containNumbers = numPrompt
+}
+
+function askUserIfTheyWantSymbols() {
+    const symbPrompt = window.confirm("Press OK to add symbols to your password.");
+    optionsChoseByUser.containSymbols = symbPrompt
+}
 
 function generatePassword() {
-    var userChoice = window.prompt("The password lenght must be between 8 and 128 characters long.");
-    var lowPrompt = window.confirm("Press OK to add lower case letters to your password.");
-    var uppPrompt = window.confirm("Press OK to add upper case letters to your password.");
-    var numbPrompt = window.confirm("Press OK to add numbers to your password.");
-    var specCharPrompt = window.confirm("Press OK to add special characters to your password");
-    var password = [];
+    password = "";
+    if (optionsChoseByUser.containLowerCase) {
+        functionToExecute.push(getCharacter.lowerCase)
+    }
+    if (optionsChoseByUser.containUpperCase) {
+        functionToExecute.push(getCharacter.upperCase) 
+    }
+    if (optionsChoseByUser.containNumbers) {
+        functionToExecute.push(getCharacter.numbers) 
+    }
+    if (optionsChoseByUser.containSymbols) {
+        functionToExecute.push(getCharacter.symbols) 
+    }
 
+    for(i = 0; i < optionsChoseByUser.passwordLength; i++) {
+        let option = [Math.floor(Math.random() * functionToExecute.length)];
+        let result = functionToExecute[option]
+        password += result()
+    }
 
-    if (userChoice >= 8 && userChoice >= 128) {
-
-    } 
 }
 
-    
-generatePassword();
-
+askUserForPasswordLength();
+askUserIfTheyWantLowerCase(); 
+askUserIfTheyWantUpperCase();
+askUserIfTheyWantNumbers();
+askUserIfTheyWantSymbols();   
 
 
 
@@ -46,7 +96,7 @@ var generateBtn = document.querySelector("#generate");
 
 // Write password to the #password input
 function writePassword() {
-  var password = generatePassword();
+  generatePassword();
   var passwordText = document.querySelector("#password");
 
   passwordText.value = password;
