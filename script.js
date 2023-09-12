@@ -31,7 +31,7 @@ const getCharacter = {
 }
 
 function askUserForPasswordLength() {
-    const passwPrompt = window.prompt("Choose a number between 8 and 128.");
+    const passwPrompt = window.prompt("Please choose a number between 8 and 128.");
     if (passwPrompt >= 8 && passwPrompt <= 128) {
         optionsChoseByUser.passwordLength = passwPrompt
     } else {
@@ -41,26 +41,31 @@ function askUserForPasswordLength() {
 }
 
 function askUserIfTheyWantLowerCase() {
-    const lowPrompt = window.confirm("Press OK to add lower case letters to your password.");
+    const lowPrompt = window.confirm("Press OK to add Lower Case Letters to your password.");
     optionsChoseByUser.containLowerCase = lowPrompt
 }
 
 function askUserIfTheyWantUpperCase() {
-    const uppPrompt = window.confirm("Press OK to add upper case letters to your password.");
+    const uppPrompt = window.confirm("Press OK to add Upper Case Letters to your password.");
     optionsChoseByUser.containUpperCase = uppPrompt
 }
 
 function askUserIfTheyWantNumbers() {
-    const numPrompt = window.confirm("Press OK to add numbers to your password.");
+    const numPrompt = window.confirm("Press OK to add Numbers to your password.");
     optionsChoseByUser.containNumbers = numPrompt
 }
 
 function askUserIfTheyWantSymbols() {
-    const symbPrompt = window.confirm("Press OK to add symbols to your password.");
+    const symbPrompt = window.confirm("Press OK to add Symbols to your password.");
     optionsChoseByUser.containSymbols = symbPrompt
 }
 
 function generatePassword() {
+    askUserForPasswordLength();
+    askUserIfTheyWantLowerCase(); 
+    askUserIfTheyWantUpperCase();
+    askUserIfTheyWantNumbers();
+    askUserIfTheyWantSymbols();  
     password = "";
     if (optionsChoseByUser.containLowerCase) {
         functionToExecute.push(getCharacter.lowerCase)
@@ -80,16 +85,7 @@ function generatePassword() {
         let result = functionToExecute[option]
         password += result()
     }
-
 }
-
-askUserForPasswordLength();
-askUserIfTheyWantLowerCase(); 
-askUserIfTheyWantUpperCase();
-askUserIfTheyWantNumbers();
-askUserIfTheyWantSymbols();   
-
-
 
 // Get references to the #generate element
 var generateBtn = document.querySelector("#generate");
