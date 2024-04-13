@@ -80,11 +80,12 @@ function generatePassword() {
         functionToExecute.push(getCharacter.symbols) 
     }
 
-    for(i = 0; i < optionsChoseByUser.passwordLength; i++) {
+    for(var i = 0; i < optionsChoseByUser.passwordLength; i++) {
         let option = [Math.floor(Math.random() * functionToExecute.length)];
         let result = functionToExecute[option]
         password += result()
     }
+    return password;
 }
 
 // Get references to the #generate element

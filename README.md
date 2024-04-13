@@ -7,7 +7,7 @@ https://irimeroi.github.io/password.generator/
 This project is a password generator. It creates a random password after the user had answered a series of questions such as the amount of characteres it will contain, or the type of characters desired.
 
 ## Installation
-N/A.
+N/A
 
 ## Usage
 To be able to use this website, an user needs to click on the link provided above. Once inside it, the system will create a password after pressing the 'Generate password' button, and answering the questions.
